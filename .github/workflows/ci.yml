@@ -32,8 +32,11 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm # Install pnpm globally
 
-      - name: Install dependencies  
+      - name: Install dependencies
         run: pnpm install
+
+      - name: Verify pnpm installation # NEW: Verify pnpm is installed
+        run: pnpm --version
 
       - name: Build project
         run: pnpm run build
