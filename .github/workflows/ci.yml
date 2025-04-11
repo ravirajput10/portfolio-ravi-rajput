@@ -22,10 +22,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }} # Use the node version from the matrix for each run
           cache: "pnpm" # Caching npm dependencies
-      - run: pnpm install
-      - run: pnpm run build
+
+      - name: Install pnpm
+        run: npm install -g pnpm # Install pnpm globally
+
+      - name: Install dependencies  
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm run build
