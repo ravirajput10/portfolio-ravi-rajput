@@ -1,0 +1,31 @@
+name: CI # Name of the workflow
+on:
+  # This workflow will run on every push to the `main` branch and on pull requests targeting the `main` branch
+  # You can also schedule it to run at specific times using cron syntax
+  # Run the workflow on push to the main branch. You can add more branches if needed by separating them with commas
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main] # Run the workflow on pull request to the main branch. You can add more branches if needed by separating them with commas
+  workflow_dispatch: # Allow you to run the workflow manually from the Actions tab
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x] # Add more versions as needed
+        # os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }} # Use the node version from the matrix for each run
+          cache: "npm" # Caching npm dependencies
+      - run: npm install
+      - run: npm run build
